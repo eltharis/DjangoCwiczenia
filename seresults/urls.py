@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 
 from seresults import views
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
+    url(r'login/', auth_views.login, name='login'),
     url(r'my_requests/$', views.my_requests, name='my_request')
 
 ]
