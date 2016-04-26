@@ -13,13 +13,9 @@
 
     <form action="{% url 'login' %}" method="POST">
         {% csrf_token %}
-        {% include 'include/form_field_error.html' with field=form.username %}
-        <label>{{ form.username.label }}</label><br>
-        {{ form.username }}<br>
+        {% include 'include/form_field.html' with field=form.username %}
+        {% include 'include/form_field.html' with field=form.password %}
 
-        {% include 'include/form_field_error.html' with field=form.password %}
-        <label>{{ form.password.label }}</label><br>
-        {{ form.password }}<br>
         <button class="btn btn-info" type="submit">{% trans 'Zaloguj' %}</button>
     </form>
 {% endblock %}

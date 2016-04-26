@@ -1,5 +1,39 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-    {{ requests }}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>{% trans "Fraza" %}</th>
+                <th>{% trans "Wyszukiwarka" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Liczba wyników" %}</th>
+                <th>{% trans "Akcje" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+                <tr>
+                    <td>{{ request.query }}</td>
+                    <td>{{ request.search_engine_name }}</td>
+                    <td>{{ request.status_name }}</td>
+                    <td>
+                        {% if request.is_finished %}
+                            {{ request.results.count }}
+                        {% else %}
+                            --
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if request.is_finished %}
+                            <a href="">{% trans "Podejrzyj wyniki" %}</a>
+                        {% else %}
+                            {% trans "Proszę czekać" %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

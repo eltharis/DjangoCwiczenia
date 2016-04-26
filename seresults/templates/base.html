@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,13 +33,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="#">Jakiś szajs</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                {% if user.is_authenticated %}
+                    <li class="active"><a href="{% url 'my_request' %}">{% trans "Moje zapytania" %}</a></li>
+                    <li><a href="{% url 'add_request' %}">{% trans "Dodaj zapytanie" %}</a></li>
+                    <li><a href="{% url 'logout' %}">{% trans "Wyloguj" %}</a></li>
+                {% else %}
+                    <li><a href="{% url "login" %}">{% trans "Zaloguj" %}</a></li>
+                {% endif %}
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -46,13 +51,15 @@
 
 <div class="container">
 
-    {% block content %}
-        <div class="starter-template">
-            <h1>Bootstrap starter template</h1>
-            <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text
-                and a mostly barebones HTML document.</p>
+    <div class="starter-template">
+        {% include 'include/messages.html' %}
+
+        {% block content %}
+                <h1>Bootstrap starter template</h1>
+                <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text
+                    and a mostly barebones HTML document.</p>
+        {% endblock %}
     </div>
-    {% endblock %}
 
 </div><!-- /.container -->
 

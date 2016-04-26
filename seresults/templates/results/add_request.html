@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% trans "Dodaj zapytanie" %}</h1>
+    <form action="{% url 'add_request' %}" method="POST">
+        {% csrf_token %}
+
+        {% include 'include/form_field.html' with field=form.query %}
+        {% include 'include/form_field.html' with field=form.search_engine %}
+
+        <button class="btn btn-info" type="submit">{% trans 'Dodaj' %}</button>
+    </form>
+{% endblock %}
