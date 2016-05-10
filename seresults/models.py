@@ -39,14 +39,18 @@ class SearchRequest(models.Model):
     def search_engine_name(self):
         return [n for (i, n) in search_engine_options()
                 if i == self.search_engine][0]
+    search_engine_name.short_description = _(u"Wyszukiwarka")
 
     def status_name(self):
         return [n for (i, n) in status_options()
                 if i == self.status][0]
+    status_name.short_description = _(u"Status")
 
     def is_finished(self):
         return self.status == STATUS_FINISHED
 
+    def __str__(self):
+        return self.query
 
 class SearchResult(models.Model):
     title = models.CharField(max_length=255, verbose_name=_(u"Tytuł"))
