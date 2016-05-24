@@ -126,3 +126,11 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/se/login/'
 LOGIN_REDIRECT_URL = '/se/my_requests/'
+
+from datetime import timedelta
+CELERYBEAT_SCHEDULE = {
+    'periodic-every-5-seconds': {
+        'task': 'seresults.tasks.periodic',
+        'schedule': timedelta(seconds=5)
+    }
+}

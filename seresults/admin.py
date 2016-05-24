@@ -28,8 +28,8 @@ class SearchRequestAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SearchRequestAdminForm, self).__init__(*args, **kwargs)
 
-        self.fields['search_engine'] = forms.ChoiceField(choices=search_engine_options())
-        self.fields['status'] = forms.ChoiceField(choices=status_options())
+        self.fields['search_engine'] = forms.ChoiceField(choices=search_engine_options(), label=_(u"Wyszukiwarka"))
+        self.fields['status'] = forms.ChoiceField(choices=status_options(), label=_(u"Status"))
 
 
 @admin.register(SearchRequest)
@@ -39,6 +39,7 @@ class SearchRequestAdmin(admin.ModelAdmin):
     search_fields = ('query', 'user__username')
 
     fields = ('query', 'search_engine', 'status', 'user')
+    readonly_fields = ('query', 'user')
     form = SearchRequestAdminForm
 
     def field_username(self, obj):
@@ -51,7 +52,15 @@ class SearchRequestAdmin(admin.ModelAdmin):
 
     field_status_name.short_description = _(u"Status")
 
+    def get_fields(self, request, obj=None):
+        if obj is not None and obj.is_finished():
+            return ('query', 'search_engine_name', 'status_name', 'user')
+        return self.fields
+
+
     def get_readonly_fields(self, request, obj=None):
         if obj is not None and obj.is_finished():
-            return self.fields
-        return self.readonly_fields
+            return ('query', 'search_engine_name', 'status_name', 'user')
+        elif obj is not None:
+            return ('query', 'user')
+        return ()

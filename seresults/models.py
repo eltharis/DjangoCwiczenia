@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _, ugettext as __
 
 # Create your models here.
@@ -36,6 +37,9 @@ class SearchRequest(models.Model):
     status = models.IntegerField(verbose_name=_(u"Status"), default="1")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u"Użytkownik"), related_name="search_requests")
 
+    added_at = models.DateTimeField(verbose_name=_(u"Data dodania"), default=timezone.now)
+    finished_at = models.DateTimeField(verbose_name=_(u"Data zakończenia"), blank=True, null=True)
+
     def search_engine_name(self):
         return [n for (i, n) in search_engine_options()
                 if i == self.search_engine][0]
@@ -46,11 +50,21 @@ class SearchRequest(models.Model):
                 if i == self.status][0]
     status_name.short_description = _(u"Status")
 
+    def finish(self, results):
+        for result in results:
+            search_result = SearchResult(**result)
+            search_result.request = self
+            self.results.add(search_result)
+        self.finished_at = timezone.now()
+        self.status = STATUS_FINISHED
+        self.save()
+
     def is_finished(self):
         return self.status == STATUS_FINISHED
 
     def __str__(self):
         return self.query
+
 
 class SearchResult(models.Model):
     title = models.CharField(max_length=255, verbose_name=_(u"Tytuł"))
