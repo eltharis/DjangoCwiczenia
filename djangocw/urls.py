@@ -16,9 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from seresults import urls
+from seresults import urls as seresults_urls
+from seresults_api import urls as seresults_api_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^se/', include(urls)),
+    url(r'^se/', include(seresults_urls)),
+    url(r'^api-v1/', include(seresults_api_urls))
 ]

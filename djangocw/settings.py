@@ -40,7 +40,10 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
-    'seresults.apps.SeresultsConfig'
+    'rest_framework',
+
+    'seresults.apps.SeresultsConfig',
+    'seresults_api.apps.SeresultsApiConfig'
 ]
 
 MIDDLEWARE_CLASSES = [
