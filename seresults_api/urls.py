@@ -8,8 +8,8 @@ router = routers.DefaultRouter()
 router.register(r'requests', views.SearchRequestViewSet)
 
 urlpatterns = [
-    url(r'^token-auth/', obtain_auth_token),
     url(r'^users/$', views.user_list, name="user-list"),
+    url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^', include(router.urls)),
 ]
 

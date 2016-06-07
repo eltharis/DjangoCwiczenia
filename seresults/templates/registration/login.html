@@ -11,7 +11,7 @@
         </div>
     {% endfor %}
 
-    <form action="{% url 'login' %}" method="POST">
+    <form action="" method="POST">
         {% csrf_token %}
         {% include 'include/form_field.html' with field=form.username %}
         {% include 'include/form_field.html' with field=form.password %}

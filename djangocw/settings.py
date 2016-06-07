@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'rest_framework',
     'rest_framework.authtoken',
+    'oauth2_provider',
 
     'seresults.apps.SeresultsConfig',
     'seresults_api.apps.SeresultsApiConfig'
@@ -84,7 +85,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
     )
 }
 
