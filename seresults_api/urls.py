@@ -8,7 +8,6 @@ router = routers.DefaultRouter()
 router.register(r'requests', views.SearchRequestViewSet)
 
 urlpatterns = [
-    # url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^token-auth/', obtain_auth_token),
     url(r'^users/$', views.user_list, name="user-list"),
     url(r'^', include(router.urls)),
