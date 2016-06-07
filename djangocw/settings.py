@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += [
     'rest_framework',
+    'rest_framework.authtoken',
 
     'seresults.apps.SeresultsConfig',
     'seresults_api.apps.SeresultsApiConfig'
@@ -77,6 +78,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangocw.wsgi.application'
 
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 3,
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
